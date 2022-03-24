@@ -29,7 +29,7 @@ Start the cluster with:
 ```
 docker-compose up --detach
 ```
-Test the cluster using notebook `./local/notebooks/pyspark-notebook-1.ipynb`  
+Test the cluster using notebook `./local/notebooks/pyspark-test.ipynb`  
 - Use the JupyterLab environment which should now be available on http://localhost:8889/
 - More details about the JupyterLab environment are listed below in the *Connect to Cluster via JupyterLab* section.
 
