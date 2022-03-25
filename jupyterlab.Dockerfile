@@ -2,7 +2,7 @@ FROM cluster-base
 
 # -- Layer: JupyterLab
 
-ARG spark_version=2.4.5
+ARG spark_version=3.1.2
 ARG jupyterlab_version=2.1.5
 
 
@@ -14,7 +14,8 @@ COPY requirements.txt ./
 
 RUN pip3 install -r requirements.txt
 
-RUN pip3 install pyspark==${spark_version} jupyterlab==${jupyterlab_version} && \
+RUN pip3 install pyspark==${spark_version} jupyterlab && \
+    pip3 install spark-nlp==3.4.2 && \
     rm -rf /var/lib/apt/lists/* && \
     ln -s /usr/local/bin/python3 /usr/bin/python
 
