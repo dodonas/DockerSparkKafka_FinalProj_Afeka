@@ -14,8 +14,7 @@ COPY requirements.txt ./
 
 RUN pip3 install -r requirements.txt
 
-RUN pip3 install pyspark==${spark_version} jupyterlab && \
-    pip3 install spark-nlp==3.4.2 && \
+RUN pip3 install pyspark==3.1.2 spark-nlp==3.4.2 jupyterlab confluent-kafka && \
     rm -rf /var/lib/apt/lists/* && \
     ln -s /usr/local/bin/python3 /usr/bin/python
 
