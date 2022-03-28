@@ -4,7 +4,7 @@
 
 ## Spark and Hadoop Configuration and Release Information ##
 
-Spark Version `2.4.5`, Hadoop version is `2.7`, Python version `3.7.3`.
+Spark Version `3.1.2`, Hadoop version is `3.2`, Python version `3.7.13`.
 
 Apache Spark is running in *Standalone Mode* and controls its own master and worker nodes instead of Yarn managing them.     
 
@@ -28,8 +28,7 @@ Create the Docker volumes before starting services:
 Start the cluster with:  
 ```
 docker-compose up --detach
-```
-Test the cluster using notebook `./local/notebooks/pyspark-test.ipynb`  
+``` 
 - Use the JupyterLab environment which should now be available on http://localhost:8889/
 - More details about the JupyterLab environment are listed below in the *Connect to Cluster via JupyterLab* section.
 
@@ -93,7 +92,7 @@ This folder is included in the `.gitignore` file so updates to the notebooks and
 Three shared cluster-wide folders are created on top of `/opt/workspace` during the Docker build:
 + `/opt/workspace/events` - Spark history events  
 + `/opt/workspace/datain` - source data for loading in to Spark jobs  
-+ `/opt/workspace/dataout`- output data from Spark jobs  
++ `/opt/workspace/dataout`- output data from Spark jobs (IMPLEMENTED BUT NOT IN USE)
 
 The data in these folders is persistent between container restarts and between Docker image rebuilds as it is located on the Docker `shared-workspace` volume.
 
@@ -132,7 +131,6 @@ View the overall state of the cluster via the *Spark Master Web UI* at `http://l
 
 This also lists the URL for the *Spark Master Service*: `spark://spark-master:7077`   
 
-Because the cluster is running in Standalone Mode (*Not* Yarn), it is not possible to use the usual `yarn application -kill` command.  Instead, use the Spark Master web UI to list running jobs and kill them by selecting the "kill" link in the Running Applications view.
 ![Cluster]     
 
 ### Spark History Server ###
@@ -189,24 +187,3 @@ spark = SparkSession.\
 spark.stop()
 ```
 
-# Submit PySpark Jobs to the Spark Master #
-
-Jobs can be submitted to run against the cluster by running `spark-submit` from the jupyterlab container, which is installed in `/usr/local/bin` as part of the PySpark install in the Docker build for this image.
-
-A wrapper script in `/opt/workspace/notebooks/jobs` called `spark-submit.sh` can be used to call the main `spark-submit` utility and get it to execute a PySpark Python script in the Spark cluster - EG:
-```
-# Start a shell-session in the JupyterLab container
-docker exec -it jupyterlab bash
-
-# CD to PySpark jobs folder
-cd notebooks/jobs
-
-# spark-submit the pi.py script
-./spark-submit.sh pi.y
-```
-
-View the progress and output from the Spark Master console UI:   
-http://localhost:8080/  
-and the history server (after the job has completed):  
-http://localhost:18081/  
-(click on the AppID link to drill down into the job execution stats and details of the DAG workflow)  
