@@ -78,7 +78,6 @@ docker-compose down
 If required, a Kafka streaming environment can also be created that is integrated with the Spark cluster.  This has to be manually installed and configured. 
  Instructions for installing Kafka are in [README_KAFKA.md](./README_KAFKA.md)
 
-An example of running a continuous aggregate query in Spark receiving data from a Kafka topic is provided in [README_KAFKA_EXAMPLE.md](./README_KAFKA_EXAMPLE.md) 
 
 ## Shared JupyterLab Notebooks Folder ##
 
